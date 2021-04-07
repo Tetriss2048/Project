@@ -75,11 +75,13 @@ def start():
 # Function for creating random shaped tetrominoes to enter the game grid
 def create_tetromino(grid_height, grid_width):
    # type (shape) of the tetromino is determined randomly
-   tetromino_types = [ 'I', 'O', 'Z' ]
+   tetromino_types = [ 'I', 'O', 'Z','S','J','L','T' ]
    random_index = random.randint(0, len(tetromino_types) - 1)
    random_type = tetromino_types[random_index]
    # create and return the tetromino
-   tetromino = Tetromino(random_type, grid_height, grid_width)
+   #tetromino = Tetromino(random_type, grid_height, grid_width)
+   tetromino = Tetromino()
+   tetromino.startMethod(random_type, grid_height, grid_width)
    return tetromino
 
 # Function for displaying a simple menu before starting the game

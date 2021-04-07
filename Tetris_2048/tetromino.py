@@ -8,7 +8,7 @@ import numpy as np # fundamental Python module for scientific computing
 # as (I, O and Z)
 class Tetromino:
    # Constructor to create a tetromino with a given type (shape)
-   def _init_(self, type, grid_height, grid_width):
+   def startMethod(self, type, grid_height, grid_width):
       # set grid_height and grid_width from input parameters
       self.grid_height = grid_height
       self.grid_width = grid_width
@@ -28,7 +28,7 @@ class Tetromino:
          occupied_tiles.append((1, 0))
          occupied_tiles.append((0, 1))
          occupied_tiles.append((1, 1))
-      
+
       elif type == 'Z':
          n = 3  # n = number of rows = number of columns in the tile matrix
          # shape of the tetromino Z in its initial orientation
