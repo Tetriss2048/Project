@@ -9,6 +9,7 @@ from color import Color # used for coloring the game menu
 # MAIN FUNCTION OF THE PROGRAM
 #-------------------------------------------------------------------------------
 # Main function where this program starts execution
+
 def start():
    # set the dimensions of the game grid
    grid_h, grid_w = 20, 12
@@ -28,7 +29,8 @@ def start():
 
    # display a simple menu before opening the game
    display_game_menu(grid_h, grid_w)
-   
+
+   isPaused = False
    # main game loop (keyboard interaction for moving the tetromino) 
    while True:
       # check user interactions via the keyboard
@@ -48,7 +50,15 @@ def start():
             # (causes the tetromino to fall down faster)
             current_tetromino.move(key_typed, grid)
          # clear the queue that stores all the keys pressed/typed
+         elif key_typed == 'p':
+            isPaused = not isPaused
+
          stddraw.clearKeysTyped()
+
+      if isPaused:
+         grid.display()
+         continue
+
 
       # move (drop) the tetromino down by 1 at each iteration 
       success = current_tetromino.move("down", grid)
@@ -66,11 +76,11 @@ def start():
          # by using the create_tetromino function defined below
          current_tetromino = create_tetromino(grid_h, grid_w)
          grid.current_tetromino = current_tetromino
-
+         print("Game over")
       # display the game grid and as well the current tetromino      
       grid.display()
 
-   print("Game over")
+
 
 # Function for creating random shaped tetrominoes to enter the game grid
 def create_tetromino(grid_height, grid_width):
