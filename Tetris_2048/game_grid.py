@@ -93,8 +93,10 @@ class GameGrid:
    # topmost game grid row. The method returns True when the game is over and
    # False otherwise.
    def update_grid(self, tiles_to_place):
+
       # place all the tiles of the stopped tetromino onto the game grid 
       n_rows, n_cols = len(tiles_to_place), len(tiles_to_place[0])
+
       for col in range(n_cols):
          for row in range(n_rows):            
             # place each occupied tile onto the game grid
@@ -102,6 +104,7 @@ class GameGrid:
                pos = tiles_to_place[row][col].get_position()
                if self.is_inside(pos.y, pos.x):
                   self.tile_matrix[pos.y][pos.x] = tiles_to_place[row][col]
+
                # the game is over if any placed tile is out of the game grid
                else:
                   self.game_over = True
