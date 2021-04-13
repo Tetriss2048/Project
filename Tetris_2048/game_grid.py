@@ -1,6 +1,8 @@
 import stddraw # the stddraw module is used as a basic graphics library
 from color import Color # used for coloring the game grid
 import numpy as np # fundamental Python module for scientific computing
+from tile import Tile # used for representing each tile on the tetromino
+from point import Point
 
 # Class used for modelling the game grid
 class GameGrid:
@@ -110,3 +112,70 @@ class GameGrid:
                   self.game_over = True
       # return the game_over flag
       return self.game_over
+
+   def MakeAllFall(self):
+
+      for x in range(self.grid_width):
+         y = 0
+         makeZero = False
+         while y < self.grid_height:
+
+
+
+
+
+            y = y+1
+
+
+   def CheckNumbers(self):
+
+      for x in range(self.grid_width):
+         y = 0
+         makeZero = False
+         while y < self.grid_height:
+            if self.tile_matrix[y][x] != None and self.tile_matrix[y+1][x] != None:
+               if self.tile_matrix[y][x].get_number() == self.tile_matrix[y+1][x].get_number():
+                  self.tile_matrix[y][x].set_number(self.tile_matrix[y+1][x].get_number()*2)
+                  self.tile_matrix[y+1][x] = None
+                  makeZero = True
+
+
+                  if self.tile_matrix[y+2][x] != None:
+                     for y2 in range(y,self.grid_height-1):
+                        if self.tile_matrix[y2+1][x] != None:
+                           position = Point()
+                           position.y = y2+1
+                           position.x = x
+                           self.tile_matrix[y2][x] = Tile(position)
+                           self.tile_matrix[y2][x].set_number(self.tile_matrix[y2 + 1][x].get_number())
+                           self.tile_matrix[y2 + 1][x] = None
+
+                     makeZero = True
+
+
+            if makeZero:
+               y = 0
+               makeZero = False
+            else:
+               y = y+1
+
+      self.display()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

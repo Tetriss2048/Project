@@ -96,6 +96,7 @@ class Tetromino:
                # considering newly entered tetrominoes to the game grid that may 
                # have tiles with position.y >= grid_height
                position = self.tile_matrix[row][col].get_position()
+
                if position.y < self.grid_height:
                   self.tile_matrix[row][col].draw() 
 

@@ -69,6 +69,9 @@ def start():
             tiles_to_place = current_tetromino.tile_matrix
             # update the game grid by adding the tiles of the tetromino
             game_over = grid.update_grid(tiles_to_place)
+
+            grid.CheckNumbers()
+
             # end the main game loop if the game is over
             if game_over:
                 break

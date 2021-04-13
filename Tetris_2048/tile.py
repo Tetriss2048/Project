@@ -39,6 +39,8 @@ class Tile:
       return cp.copy(self.number)
       # Method for moving the tile by dx along the x axis and by dy along the y axis
 
+   def set_number(self,new_number):
+      self.number=new_number
 
    def move(self, dx, dy):
       self.position.translate(dx, dy)
