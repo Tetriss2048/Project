@@ -51,6 +51,8 @@ def start():
                 # (causes the tetromino to fall down faster)
                 current_tetromino.move(key_typed, grid)
             # clear the queue that stores all the keys pressed/typed
+            elif key_typed == "space":
+                current_tetromino.rotate(key_typed, grid)
             elif key_typed == 'p':
                 isPaused = not isPaused
 
@@ -79,9 +81,11 @@ def start():
             # by using the create_tetromino function defined below
             current_tetromino = create_tetromino(grid_h, grid_w)
             grid.current_tetromino = current_tetromino
-            print("Game over")
+
         # display the game grid and as well the current tetromino
         grid.display()
+
+    print("Game over")
 
 
 # Function for creating random shaped tetrominoes to enter the game grid
