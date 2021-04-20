@@ -109,23 +109,14 @@ class Tetromino:
 
         for row in range(n):
             for col in range(n):
-                if key_typed == "space":
-                    if self.tile_matrix[row][col] is not None:
-                        position = self.tile_matrix[row][col].get_position()
-                        position.x = self.bottom_left_corner.x + (n - 1 - row)
-                        position.y = self.bottom_left_corner.y + (n - 1) - col
 
-                        rotated_matrix[col][n - 1 - row] = self.tile_matrix[row][col]
+                if self.tile_matrix[row][col] is not None:
+                    position = self.tile_matrix[row][col].get_position()
+                    position.x = self.bottom_left_corner.x + (n - 1 - row)
+                    position.y = self.bottom_left_corner.y + (n - 1) - col
 
-                        new_pos_y = -1 * col
-                        new_pos_x = 1 * row
-
-                        final_pos_y = row + new_pos_y
-                        final_pos_x = col + new_pos_x
-
-                        self.tile_matrix[row][col].set_position(position)
-
-                        self.tile_matrix[row][col].rotate(final_pos_y, final_pos_x)
+                    rotated_matrix[col][n - 1 - row] = self.tile_matrix[row][col]
+                    self.tile_matrix[row][col].set_position(position)
 
         self.tile_matrix = rotated_matrix
 
