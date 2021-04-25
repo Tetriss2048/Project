@@ -72,7 +72,12 @@ def start():
             # update the game grid by adding the tiles of the tetromino
             game_over = grid.update_grid(tiles_to_place)
 
-            grid.CheckNumbers()
+            didMoved = True
+
+            while didMoved:
+                grid.CheckNumbers()
+                didMoved = grid.check_fall()
+
 
             # end the main game loop if the game is over
             if game_over:

@@ -113,18 +113,47 @@ class GameGrid:
       # return the game_over flag
       return self.game_over
 
-   def MakeAllFall(self):
+   def make_fall(self,x,y,string):
 
+      print("x: "+str(x)+",  y: " + str(y)+"   call from : "+string)
+
+      for yVal in range(y-1,self.grid_height-1):
+         if self.tile_matrix[yVal][x] != None:
+            position = Point()
+            position.y = yVal - 1
+            position.x = x
+            self.tile_matrix[yVal - 1][x] = Tile(position)
+            self.tile_matrix[yVal - 1][x].set_number(self.tile_matrix[yVal][x].get_number())
+            self.tile_matrix[yVal][x] = None
+
+
+   def check_fall(self):
+      didMoved = False
       for x in range(self.grid_width):
-         y = 0
-         makeZero = False
-         while y < self.grid_height:
+         y = 1
 
+         while y < self.grid_height-1:
+            if self.tile_matrix[y][x] != None and self.tile_matrix[y-1][x] == None:
+               if x+1 < self.grid_width and  x > 0:
+                  if self.tile_matrix[y][x+1] == None and  self.tile_matrix[y][x-1] == None:
+                     self.make_fall(x,y,"checkFall, mid")
+                     y -= 2
+                     didMoved = True
 
+               elif x+1 == self.grid_width:
+                  if self.tile_matrix[y][x - 1] == None:
+                     self.make_fall(x,y,"checkFall, right")
+                     y -= 2
+                     didMoved = True
 
-
+               elif x == 0:
+                  if self.tile_matrix[y][x + 1] == None:
+                     self.make_fall(x,y,"checkFall , left")
+                     y -= 2
+                     didMoved = True
 
             y = y+1
+      return didMoved
 
 
    def CheckNumbers(self):
@@ -132,23 +161,16 @@ class GameGrid:
       for x in range(self.grid_width):
          y = 0
          makeZero = False
-         while y < self.grid_height:
+         while y < self.grid_height-1:
             if self.tile_matrix[y][x] != None and self.tile_matrix[y+1][x] != None:
                if self.tile_matrix[y][x].get_number() == self.tile_matrix[y+1][x].get_number():
-                  self.tile_matrix[y][x].set_number(self.tile_matrix[y+1][x].get_number()*2)
+                  self.tile_matrix[y][x].set_number(self.tile_matrix[y][x].get_number()*2)
                   self.tile_matrix[y+1][x] = None
                   makeZero = True
 
-
                   if self.tile_matrix[y+2][x] != None:
-                     for y2 in range(y,self.grid_height-1):
-                        if self.tile_matrix[y2+1][x] != None:
-                           position = Point()
-                           position.y = y2+1
-                           position.x = x
-                           self.tile_matrix[y2][x] = Tile(position)
-                           self.tile_matrix[y2][x].set_number(self.tile_matrix[y2 + 1][x].get_number())
-                           self.tile_matrix[y2 + 1][x] = None
+
+                     self.make_fall(x,y+2,"checkNumbers")
 
                      makeZero = True
 
@@ -160,6 +182,33 @@ class GameGrid:
                y = y+1
 
       self.display()
+
+
+
+
+
+   def clear_rows(self):
+      y=0
+      while y < self.grid_height:
+         row=0
+         isFilled= True
+         while row < self.grid_width:
+            if self.tile_matrix[y][row] == None:
+               isFilled=False
+            row=row+1
+         if isFilled:
+            self.tile_matrix[y][row] = None
+         y = y + 1
+
+
+
+
+
+
+
+
+
+
 
 
 
