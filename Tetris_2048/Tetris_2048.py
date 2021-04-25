@@ -73,11 +73,11 @@ def start():
             game_over = grid.update_grid(tiles_to_place)
 
             didMoved = True
+            didMoved2 = True
 
-            while didMoved:
-                grid.CheckNumbers()
-                didMoved = grid.check_fall()
-
+            while didMoved or didMoved2:
+                didMoved2 = grid.CheckNumbers()
+                didMoved = grid.check_fall2()
 
             # end the main game loop if the game is over
             if game_over:

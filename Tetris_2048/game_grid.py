@@ -114,9 +114,7 @@ class GameGrid:
       return self.game_over
 
    def make_fall(self,x,y,string):
-
-      print("x: "+str(x)+",  y: " + str(y)+"   call from : "+string)
-
+      #print("x: "+str(x)+",  y: " + str(y)+"   call from : "+string)
       for yVal in range(y-1,self.grid_height-1):
          if self.tile_matrix[yVal][x] != None:
             position = Point()
@@ -129,6 +127,7 @@ class GameGrid:
 
    def check_fall(self):
       didMoved = False
+
       for x in range(self.grid_width):
          y = 1
 
@@ -155,9 +154,62 @@ class GameGrid:
             y = y+1
       return didMoved
 
+   def check_fall2(self):
+      didMoved = False
+
+      for y in range(1,self.grid_height-1):
+         x = 0
+
+         checkTiles = []
+
+         while x < self.grid_width:
+            if self.tile_matrix[y][x] != None:
+               checkTiles.append(self.tile_matrix[y][x])
+            else:
+               if (len(checkTiles) > 0):
+                  #print("checktiles num :  "+str( len(checkTiles)))
+                  if self.AllDown(checkTiles,self.GetMinLowVal(checkTiles)):
+                     didMoved = True
+                  checkTiles.clear()
+
+            x = x+1
+         if(len(checkTiles) > 0):
+            #print("checktiles num2 :  " +str( len(checkTiles)))
+            if(self.AllDown(checkTiles,self.GetMinLowVal(checkTiles))):
+               didMoved = True
+            checkTiles.clear()
+      return didMoved
+
+   def GetMinLowVal(self,tiles):
+
+      minVal = 100
+
+      for i in range(len(tiles)):
+         newMinVal = 0
+         downIsNone = self.tile_matrix[tiles[i].get_position().y-1][tiles[i].get_position().x] == None
+
+         while downIsNone:
+            newMinVal = newMinVal + 1
+            downIsNone = self.tile_matrix[tiles[i].get_position().y-1-newMinVal][tiles[i].get_position().x]==None
+
+         if newMinVal<minVal:
+            minVal = newMinVal
+
+      #print("MinVal : "+str(minVal))
+      return minVal
+
+   def AllDown(self,tiles,downVal):
+      if downVal == 0:
+         return False
+
+      for i in range(len(tiles)):
+         for j in range(downVal):
+            self.make_fall(tiles[i].get_position().x,tiles[i].get_position().y+1+j,"All Down")
+      return downVal!=0
+
 
    def CheckNumbers(self):
-
+      didMove = False
       for x in range(self.grid_width):
          y = 0
          makeZero = False
@@ -167,6 +219,7 @@ class GameGrid:
                   self.tile_matrix[y][x].set_number(self.tile_matrix[y][x].get_number()*2)
                   self.tile_matrix[y+1][x] = None
                   makeZero = True
+                  didMove = True
 
                   if self.tile_matrix[y+2][x] != None:
 
@@ -182,9 +235,7 @@ class GameGrid:
                y = y+1
 
       self.display()
-
-
-
+      return didMove
 
 
    def clear_rows(self):
@@ -199,11 +250,6 @@ class GameGrid:
          if isFilled:
             self.tile_matrix[y][row] = None
          y = y + 1
-
-
-
-
-
 
 
 
