@@ -149,14 +149,14 @@ def display_game_menu(grid_height, grid_width):
     # colors used for the menu
 
     background_color = Color(198, 217, 191)
-    button_color = Color(99, 140, 84)
-    text_color = Color(255, 255, 255)
+    button_color = Color(40, 114, 113)
+    text_color = Color(233, 195, 105)
     # clear the background canvas to background_color
     stddraw.clear(background_color)
     # get the directory in which this python code file is placed
     current_dir = os.path.dirname(os.path.realpath(__file__))
     # path of the image file
-    img_file = current_dir + "/menu_image.png"
+    img_file = current_dir + "/tetris_2048_2.png"
     # center coordinates to display the image
     img_center_x, img_center_y = (grid_width - 1) / 2, grid_height - 7
     # image is represented using the Picture class
@@ -171,10 +171,10 @@ def display_game_menu(grid_height, grid_width):
     stddraw.setPenColor(button_color)
     stddraw.filledRectangle(button_blc_x, button_blc_y, button_w, button_h)
     # display the text on the start game button
-    stddraw.setFontFamily("Helvetica")
+    stddraw.setFontFamily("Futura Bold")
     stddraw.setFontSize(35)
     stddraw.setPenColor(text_color)
-    text_to_display = "start"
+    text_to_display = "START"
     stddraw.text(img_center_x, 5, text_to_display)
     # menu interaction loop
     while True:
