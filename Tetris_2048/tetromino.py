@@ -1,11 +1,10 @@
 import random  # each tetromino is created with a random x value above the grid
-
 from tile import Tile  # used for representing each tile on the tetromino
 from point import Point  # used for tile positions
 import numpy as np  # fundamental Python module for scientific computing
 
 
-# Class used for representing tetrominoes with 3 out of 7 different types/shapes 
+# Class used for representing tetrominoes with 3 out of 7 different types/shapes
 # as (I, O and Z)
 class Tetromino:
     # Constructor to create a tetromino with a given type (shape)
