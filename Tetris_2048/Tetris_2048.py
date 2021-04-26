@@ -5,21 +5,29 @@ from tetromino import Tetromino  # class for modeling the tetrominoes
 from picture import Picture  # used representing images to display
 import os  # used for file and directory operations
 from color import Color  # used for coloring the game menu
-
-
+import wave
+from playsound import playsound
+from multiprocessing import Process
 # MAIN FUNCTION OF THE PROGRAM
 # -------------------------------------------------------------------------------
 # Main function where this program starts execution
 
 def start():
     # set the dimensions of the game grid
-    grid_h, grid_w = 20, 12
+
+    music = Process(target=musicJob, args=())
+    music.start()
+
+    grid_h, grid_w = 22, 12
     # set the size of the drawing canvas
-    canvas_h, canvas_w = 40 * grid_h, 40 * grid_w
+    canvas_h, canvas_w = 33 * grid_h, 50 * grid_w
     stddraw.setCanvasSize(canvas_w, canvas_h)
     # set the scale of the coordinate system
-    stddraw.setXscale(-0.5, grid_w - 0.5)
+    stddraw.setXscale(-0.5, grid_w + 6)
     stddraw.setYscale(-0.5, grid_h - 0.5)
+
+    stddraw.text(grid_w-1, grid_h-1, "ehe")
+
 
     # create the game grid
     grid = GameGrid(grid_h, grid_w)
@@ -33,30 +41,53 @@ def start():
 
     isPaused = False
     # main game loop (keyboard interaction for moving the tetromino)
-    while True:
-        # check user interactions via the keyboard
-        if stddraw.hasNextKeyTyped():
-            key_typed = stddraw.nextKeyTyped()
-            # if the left arrow key has been pressed
-            if key_typed == "left":
-                # move the tetromino left by one
-                current_tetromino.move(key_typed, grid)
-            # if the right arrow key has been pressed
-            elif key_typed == "right":
-                # move the tetromino right by one
-                current_tetromino.move(key_typed, grid)
-            # if the down arrow key has been pressed
-            elif key_typed == "down":
-                # move the tetromino down by one
-                # (causes the tetromino to fall down faster)
-                current_tetromino.move(key_typed, grid)
-            # clear the queue that stores all the keys pressed/typed
-            elif key_typed == "space":
-                current_tetromino.rotate(key_typed, grid)
-            elif key_typed == 'p':
-                isPaused = not isPaused
 
-            stddraw.clearKeysTyped()
+    while True:
+
+        if stddraw.mousePressed():
+            # get the x and y coordinates of the location at which the mouse has
+            # most recently been left-clicked
+            mouse_x, mouse_y = stddraw.mouseX(), stddraw.mouseY()
+
+            if mouse_x >= 13 and mouse_x <= 13 + 3:
+                if mouse_y >= 2 and mouse_y <= 2 + 2:
+                    isPaused = not isPaused
+
+            if mouse_x >= 13 and mouse_x <= 13 + 3:
+                if mouse_y >= 5 and mouse_y <= 5 + 2:
+                    print("Ghost Button")
+
+            if mouse_x >= 17 and mouse_x <= 17 + 1:
+                if mouse_y >= 20.4 and mouse_y <= 20.4 + 1:
+                    music.kill()
+                    exit()
+
+        if not isPaused:
+            if stddraw.hasNextKeyTyped():
+                key_typed = stddraw.nextKeyTyped()
+                # if the left arrow key has been pressed
+                if key_typed == "left":
+                    # move the tetromino left by one
+                    current_tetromino.move(key_typed, grid)
+                # if the right arrow key has been pressed
+                elif key_typed == "right":
+                    # move the tetromino right by one
+                    current_tetromino.move(key_typed, grid)
+                # if the down arrow key has been pressed
+                elif key_typed == "down":
+                    # move the tetromino down by one
+                    # (causes the tetromino to fall down faster)
+                    current_tetromino.move(key_typed, grid)
+                # clear the queue that stores all the keys pressed/typed
+                elif key_typed == "space":
+                    current_tetromino.rotate(key_typed, grid)
+                elif key_typed == 'p':
+                    isPaused = not isPaused
+
+                stddraw.clearKeysTyped()
+
+        # check user interactions via the keyboard
+
 
         if isPaused:
             grid.display()
@@ -74,11 +105,14 @@ def start():
 
             didMoved = True
             didMoved2 = True
+            didMoved3 = True
 
-            while didMoved or didMoved2:
+            while didMoved or didMoved2 or didMoved3:
                 didMoved2 = grid.CheckNumbers()
                 didMoved = grid.check_fall2()
+                didMoved3 = grid.check_rows()
 
+            grid.SetColors()
             # end the main game loop if the game is over
             if game_over:
                 break
@@ -92,6 +126,10 @@ def start():
 
     print("Game over")
 
+
+
+def musicJob():
+    playsound('ehe.mp3')
 
 # Function for creating random shaped tetrominoes to enter the game grid
 def create_tetromino(grid_height, grid_width):
