@@ -25,6 +25,32 @@ class Tile:
         # set the position of the tile as the given position
         self.position = Point(position.x, position.y)
 
+    def set_color(self):
+        self.background_color = Color(0, 255, 0)
+
+    def tile_color(self, tile_number):
+        tile_number_log = math.log(tile_number, 2)
+        if tile_number_log == 2:
+            self.background_color = Color(237, 224, 200)
+        elif tile_number_log == 3:
+            self.background_color = Color(242, 177, 121)
+        elif tile_number_log == 4:
+            self.background_color = Color(245, 149, 99)
+        elif tile_number_log == 5:
+            self.background_color = Color(246, 124, 95)
+        elif tile_number_log == 6:
+            self.background_color = Color(246, 94, 59)
+        elif tile_number_log == 7:
+            self.background_color = Color(237, 207, 114)
+        elif tile_number_log == 8:
+            self.background_color = Color(237, 204, 97)
+        elif tile_number_log == 9:
+            self.background_color = Color(237, 200, 80)
+        elif tile_number_log == 10:
+            self.background_color = Color(237, 197, 63)
+        elif tile_number_log == 11:
+            self.background_color = Color(237, 194, 46)
+
     # Setter method for the position of the tile
     def set_position(self, position):
         # set the position of the tile as the given position
@@ -45,9 +71,6 @@ class Tile:
         self.number = new_number
 
     def move(self, dx, dy):
-        self.position.translate(dx, dy)
-
-    def rotate(self, dx, dy):
         self.position.translate(dx, dy)
 
     # Method for drawing the tile
