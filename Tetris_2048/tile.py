@@ -19,9 +19,9 @@ class Tile:
         # assign the number on the tile
         self.number = 2
         # set the colors of the tile
-        self.background_color = Color(151, 178, 199)  # background (tile) color
-        self.foreground_color = Color(0, 100, 200)  # foreground (number) color
-        self.boundary_color = Color(0, 100, 200)  # boundary (box) color
+        self.background_color = Color(233, 196, 106) # background (tile) color
+        self.foreground_color = Color(0, 0, 0)
+        self.boundary_color = Color(0, 0, 0)
         # set the position of the tile as the given position
         self.position = Point(position.x, position.y)
 
@@ -31,23 +31,23 @@ class Tile:
     def tile_color(self, tile_number):
         tile_number_log = math.log(tile_number, 2)
         if tile_number_log == 2:
-            self.background_color = Color(237, 224, 200)
+            self.background_color = Color(138, 177, 125)
         elif tile_number_log == 3:
-            self.background_color = Color(242, 177, 121)
+            self.background_color = Color(239, 179, 102)
         elif tile_number_log == 4:
-            self.background_color = Color(245, 149, 99)
+            self.background_color = Color(244, 162, 97)
         elif tile_number_log == 5:
-            self.background_color = Color(246, 124, 95)
+            self.background_color = Color(238, 137, 89)
         elif tile_number_log == 6:
-            self.background_color = Color(246, 94, 59)
+            self.background_color = Color(235, 124, 85)
         elif tile_number_log == 7:
-            self.background_color = Color(237, 207, 114)
+            self.background_color = Color(231, 111, 81)
         elif tile_number_log == 8:
-            self.background_color = Color(237, 204, 97)
+            self.background_color = Color(42, 157, 143)
         elif tile_number_log == 9:
-            self.background_color = Color(237, 200, 80)
+            self.background_color = Color(41, 136, 128)
         elif tile_number_log == 10:
-            self.background_color = Color(237, 197, 63)
+            self.background_color = Color(40, 114, 113)
         elif tile_number_log == 11:
             self.background_color = Color(237, 194, 46)
 
