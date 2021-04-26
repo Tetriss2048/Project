@@ -11,6 +11,7 @@ class GameGrid:
         # set the dimensions of the game grid as the given arguments
         self.grid_height = grid_h
         self.grid_width = grid_w
+        self.point = 0
         # create the tile matrix to store the tiles placed on the game grid
         self.tile_matrix = np.full((grid_h, grid_w), None)
         # the tetromino that is currently being moved on the game grid
@@ -37,6 +38,53 @@ class GameGrid:
             self.current_tetromino.draw()
         # draw a box around the game grid
         self.draw_boundaries()
+
+        stddraw.setFontFamily("Arial")
+        stddraw.setFontSize(30)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.text(self.grid_width+2, self.grid_height-2, "Score: " + str(self.point))
+
+        stddraw.setPenColor(stddraw.DARK_BLUE)
+        stddraw.filledRectangle(13, 2, 3, 2)
+
+        stddraw.setPenColor(stddraw.BOOK_LIGHT_BLUE)
+        stddraw.filledRectangle(13.15, 2.1, 2.8, 1.8)
+
+        stddraw.setFontFamily("Arial")
+        stddraw.setFontSize(22)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.text(13.15+2.8/2, 2.1+1.8/2, "Pause")
+
+
+
+        stddraw.setPenColor(Color(150,150,150))
+        stddraw.filledRectangle(13, 5, 3, 2)
+
+        stddraw.setPenColor(stddraw.BOOK_LIGHT_BLUE)
+        stddraw.filledRectangle(13.15, 5.1, 2.8, 1.8)
+        # display the text on the start game button
+
+        stddraw.setFontFamily("Arial")
+        stddraw.setFontSize(22)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.text(13.15 + 2.8 / 2, 5.1 + 1.8 / 2, "Restart")
+
+
+
+
+        stddraw.setPenColor(stddraw.BLACK)
+        stddraw.filledRectangle(17-.1, 20.4-.1, 1.4, 1.4)
+
+        stddraw.setPenColor(Color(255, 0, 0))
+        stddraw.filledRectangle(17, 20.4, 1, 1)
+        # display the text on the start game button
+
+        stddraw.setFontFamily("Arial")
+        stddraw.setFontSize(38)
+        stddraw.setPenColor(stddraw.WHITE)
+        stddraw.text(17 + 1 / 2, 20.4 + 1 / 2, "X")
+
+
         # show the resulting drawing with a pause duration = 250 ms
         stddraw.show(300)
 
@@ -207,6 +255,16 @@ class GameGrid:
                 self.make_fall(tiles[i].get_position().x, tiles[i].get_position().y + 1 + j, "All Down")
         return downVal != 0
 
+    def SetColors(self):
+       for x in range(self.grid_width):
+          for y in range(self.grid_height):
+             if self.tile_matrix[y][x]!=None:
+
+                tile_number = self.tile_matrix[y][x].get_number()
+                self.tile_matrix[y][x].tile_color(tile_number)
+
+
+
     def CheckNumbers(self):
         didMove = False
         for x in range(self.grid_width):
@@ -222,12 +280,10 @@ class GameGrid:
 
                         self.tile_matrix[y][x].set_number(self.tile_matrix[y][x].get_number() * 2)
                         self.tile_matrix[y + 1][x] = None
+                        self.point += self.tile_matrix[y][x].get_number()
 
                         # getting tile's new computed number
-                        tile_number = self.tile_matrix[y][x].get_number()
 
-                        # changing tile color
-                        self.tile_matrix[y][x].tile_color(tile_number)
                         makeZero = True
                         didMove = True
 
@@ -245,8 +301,9 @@ class GameGrid:
         self.display()
         return didMove
 
-    def clear_rows(self):
+    def check_rows(self):
         y = 0
+        moved = False
         while y < self.grid_height:
             row = 0
             isFilled = True
@@ -255,5 +312,18 @@ class GameGrid:
                     isFilled = False
                 row = row + 1
             if isFilled:
-                self.tile_matrix[y][row] = None
+                moved = True
+                self.clear_row(y)
             y = y + 1
+        return moved
+
+    def clear_row(self,y):
+        x = 0
+        sum = 0
+
+        while x < self.grid_width:
+           sum += self.tile_matrix[y][x].get_number()
+           self.tile_matrix[y][x] = None
+           self.make_fall(x,y+1,"")
+           x += 1
+        self.point += sum

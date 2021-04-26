@@ -1,3 +1,5 @@
+import random
+
 import stddraw  # the stddraw module is used as a basic graphics library
 from color import Color  # used for coloring the tile and the number on it
 from point import Point  # used for representing the position of the tile
@@ -18,6 +20,8 @@ class Tile:
     def __init__(self, position=Point(0, 0)):  # (0, 0) is the default position
         # assign the number on the tile
         self.number = 2
+        myList=[2,2,2,2,2,2,4,4]
+        self.number=random.choice(myList)
         # set the colors of the tile
         self.background_color = Color(151, 178, 199)  # background (tile) color
         self.foreground_color = Color(0, 100, 200)  # foreground (number) color
