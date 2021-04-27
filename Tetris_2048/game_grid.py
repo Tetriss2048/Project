@@ -172,35 +172,8 @@ class GameGrid:
                 self.tile_matrix[yVal - 1][x].set_number(self.tile_matrix[yVal][x].get_number())
                 self.tile_matrix[yVal][x] = None
 
-    def check_fall(self):
-        didMoved = False
-
-        for x in range(self.grid_width):
-            y = 1
-
-            while y < self.grid_height - 1:
-                if self.tile_matrix[y][x] != None and self.tile_matrix[y - 1][x] == None:
-                    if x + 1 < self.grid_width and x > 0:
-                        if self.tile_matrix[y][x + 1] == None and self.tile_matrix[y][x - 1] == None:
-                            self.make_fall(x, y, "checkFall, mid")
-                            y -= 2
-                            didMoved = True
-
-                    elif x + 1 == self.grid_width:
-                        if self.tile_matrix[y][x - 1] == None:
-                            self.make_fall(x, y, "checkFall, right")
-                            y -= 2
-                            didMoved = True
-
-                    elif x == 0:
-                        if self.tile_matrix[y][x + 1] == None:
-                            self.make_fall(x, y, "checkFall , left")
-                            y -= 2
-                            didMoved = True
-
-                y = y + 1
-        return didMoved
-
+# to find tiles that need to fall and stick together, creates a list and appends tiles next to each other until see a gap
+# calls  AllDown and GetMinLowVal to make the tiles fall as needed
     def check_fall2(self):
         didMoved = False
 
@@ -226,7 +199,7 @@ class GameGrid:
                     didMoved = True
                 checkTiles.clear()
         return didMoved
-
+# For tiles holding each other in the air; to get the distance of the tile closest to the tile at the bottom
     def GetMinLowVal(self, tiles):
 
         minVal = 100
@@ -264,7 +237,8 @@ class GameGrid:
                 self.tile_matrix[y][x].tile_color(tile_number)
 
 
-
+#Checks if tile and tile above it are the same,
+# if it has the same number, multiply it by two and write to the bottom tile.
     def CheckNumbers(self):
         didMove = False
         for x in range(self.grid_width):
@@ -280,7 +254,7 @@ class GameGrid:
 
                         self.tile_matrix[y][x].set_number(self.tile_matrix[y][x].get_number() * 2)
                         self.tile_matrix[y + 1][x] = None
-                        self.point += self.tile_matrix[y][x].get_number()
+                        self.point += self.tile_matrix[y][x].get_number() #adds what is collected to the score
 
                         # getting tile's new computed number
 
@@ -301,6 +275,7 @@ class GameGrid:
         self.display()
         return didMove
 
+#Checks if the line is full, calls clear_row if it is full.
     def check_rows(self):
         y = 0
         moved = False
@@ -317,6 +292,7 @@ class GameGrid:
             y = y + 1
         return moved
 
+#Equals the whole line to None and adds each deleted tile to the score
     def clear_row(self,y):
         x = 0
         sum = 0
