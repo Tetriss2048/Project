@@ -29,9 +29,11 @@ class Tile:
         # set the position of the tile as the given position
         self.position = Point(position.x, position.y)
 
+    # method for giving tiles that are about to merge a green color
     def set_color(self):
         self.background_color = Color(0, 255, 0)
 
+    # taking the log of tile number (base 2), assigning different colors to different numbers
     def tile_color(self, tile_number):
         tile_number_log = math.log(tile_number, 2)
         if tile_number_log == 2:

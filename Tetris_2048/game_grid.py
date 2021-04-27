@@ -62,7 +62,7 @@ class GameGrid:
 
         stddraw.setPenColor(stddraw.BOOK_LIGHT_BLUE)
         stddraw.filledRectangle(13.15, 5.1, 2.8, 1.8)
-        # display the text on the start game button
+
 
         stddraw.setFontFamily("Arial")
         stddraw.setFontSize(22)
@@ -77,7 +77,7 @@ class GameGrid:
 
         stddraw.setPenColor(Color(255, 0, 0))
         stddraw.filledRectangle(17, 20.4, 1, 1)
-        # display the text on the start game button
+
 
         stddraw.setFontFamily("Arial")
         stddraw.setFontSize(38)

@@ -38,28 +38,28 @@ class Tetromino:
             occupied_tiles.append((2, 1))
         elif type == 'L':
             n = 3  # n = number of rows = number of columns in the tile matrix
-            # shape of the tetromino Z in its initial orientation
+            # shape of the tetromino L in its initial orientation
             occupied_tiles.append((0, 0))
             occupied_tiles.append((1, 0))
             occupied_tiles.append((2, 0))
             occupied_tiles.append((0, 1))
         elif type == 'S':
             n = 3  # n = number of rows = number of columns in the tile matrix
-            # shape of the tetromino Z in its initial orientation
+            # shape of the tetromino S in its initial orientation
             occupied_tiles.append((0, 1))
             occupied_tiles.append((1, 0))
             occupied_tiles.append((1, 1))
             occupied_tiles.append((2, 0))
         elif type == 'J':
             n = 3  # n = number of rows = number of columns in the tile matrix
-            # shape of the tetromino Z in its initial orientation
+            # shape of the tetromino J in its initial orientation
             occupied_tiles.append((0, 0))
             occupied_tiles.append((1, 0))
             occupied_tiles.append((2, 0))
             occupied_tiles.append((2, 1))
         elif type == 'T':
             n = 3  # n = number of rows = number of columns in the tile matrix
-            # shape of the tetromino Z in its initial orientation
+            # shape of the tetromino T in its initial orientation
             occupied_tiles.append((0, 0))
             occupied_tiles.append((1, 0))
             occupied_tiles.append((2, 0))
@@ -100,6 +100,7 @@ class Tetromino:
                     if position.y < self.grid_height:
                         self.tile_matrix[row][col].draw()
 
+    # rotate tetrominoes in 90 degrees clockwise rotation
     def rotate(self, key_typed, game_grid):
         if not (self.can_be_moved(key_typed, game_grid)):
             return False  # tetromino cannot be moved in the given direction
